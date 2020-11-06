@@ -7,7 +7,7 @@ import Colors from "../../constants/Colors";
 const CustomHeaderButton = props => {
     return (
         <HeaderButton
-            title={}
+            title={props.title}
             {...props}
             IconComponent={Ionicons}
             iconSize={23}
