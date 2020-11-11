@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import Colors from "../../constants/Colors";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from '../../store/actions/cart';
+import * as ordersActions from '../../store/actions/orders';
+import OrdersScreen from "./OrdersScreen";
 
 const CartScreen = props => {
     const cartTotal = useSelector(state => state.cart.totalAmount); //vai buscar ao cart reducer
@@ -18,7 +20,7 @@ const CartScreen = props => {
                 sum: state.cart.items[key].sum,
             });
         }
-        return transformedCardItems;
+        return transformedCardItems.sort((a, b) => a.productId > b.productId ? 1 : -1);
     });
 
     const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const CartScreen = props => {
                 </Text>
                 <Button title='Order Now' color={Colors.secondary}
                         onPress={() => {
+                            dispatch(ordersActions.addOrder(cartItems, cartTotal));
                         }}
                         disabled={cartItems.length === 0}
                 />
@@ -44,13 +47,17 @@ const CartScreen = props => {
                         quantity={itemData.item.quantity}
                         title={itemData.item.productTitle}
                         amount={itemData.item.sum}
+                        deletable
                         onRemove={() => dispatch(cartActions.removeFromCart(itemData.item.productId))}
                     />
                 }
             />
         </View>
-
     )
+};
+
+CartScreen.navigationOtions = {
+    headerTitle: 'Your Cart',
 };
 
 const styles = StyleSheet.create({

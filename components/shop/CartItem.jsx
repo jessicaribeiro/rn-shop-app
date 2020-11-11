@@ -13,13 +13,16 @@ const CartItem = props => {
                 <Text style={styles.text}>
                     ${props.amount.toFixed(2)}
                 </Text>
-                <TouchableOpacity onPress={props.onRemove} style={styles.removeButton}>
+                {props.deletable &&
+                <TouchableOpacity onPress={props.onRemove}
+                                  style={styles.removeButton}>
                     <Ionicons
                         name='ios-trash'
                         size={23}
                         color='red'
                     />
                 </TouchableOpacity>
+                }
             </View>
         </View>
     );
@@ -27,7 +30,7 @@ const CartItem = props => {
 
 const styles = StyleSheet.create({
     cardItem: {
-padding: 10,
+        padding: 10,
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
