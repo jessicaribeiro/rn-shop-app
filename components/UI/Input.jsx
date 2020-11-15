@@ -1,5 +1,5 @@
-import React, {useEffect, useReducer} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import React, { useReducer, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
 const INPUT_BLUR = 'INPUT_BLUR';
@@ -10,25 +10,23 @@ const inputReducer = (state, action) => {
             return {
                 ...state,
                 value: action.value,
-                isValid: action.isValid,
+                isValid: action.isValid
             };
         case INPUT_BLUR:
             return {
                 ...state,
-                touched: true,
+                touched: true
             };
         default:
             return state;
-
     }
 };
 
 const Input = props => {
-
     const [inputState, dispatch] = useReducer(inputReducer, {
         value: props.initialValue ? props.initialValue : '',
         isValid: props.initiallyValid,
-        touched: false,
+        touched: false
     });
 
     const { onInputChange, id } = props;
@@ -57,16 +55,15 @@ const Input = props => {
         if (props.minLength != null && text.length < props.minLength) {
             isValid = false;
         }
-
-        dispatch({type: INPUT_CHANGE, value: text, isValid: isValid});
+        dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
     };
 
     const lostFocusHandler = () => {
-        dispatch({type: INPUT_BLUR});
+        dispatch({ type: INPUT_BLUR });
     };
 
     return (
-        <View style={styles.formContent}>
+        <View style={styles.formControl}>
             <Text style={styles.label}>{props.label}</Text>
             <TextInput
                 {...props}
@@ -75,18 +72,18 @@ const Input = props => {
                 onChangeText={textChangeHandler}
                 onBlur={lostFocusHandler}
             />
-            {(!inputState.isValid && inputState.touched) &&
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{props.errorText}</Text>
-            </View>
-            }
+            {!inputState.isValid && inputState.touched && (
+                <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{props.errorText}</Text>
+                </View>
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    formContent: {
-        width: '100%',
+    formControl: {
+        width: '100%'
     },
     label: {
         fontFamily: 'open-sans-bold',
@@ -95,16 +92,16 @@ const styles = StyleSheet.create({
     input: {
         paddingHorizontal: 2,
         paddingVertical: 5,
-        borderBottomColor: '#ccd',
+        borderBottomColor: '#ccc',
         borderBottomWidth: 1
     },
     errorContainer: {
-        marginVertical: 5,
+        marginVertical: 5
     },
     errorText: {
         fontFamily: 'open-sans',
-        fontSize: 12,
         color: 'red',
+        fontSize: 13
     }
 });
 

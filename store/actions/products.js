@@ -7,13 +7,36 @@ export const deleteProduct = productId => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-    return {
-        type: CREATE_PRODUCT, productData: {
-            title: title,
-            description: description,
-            imageUrl: imageUrl,
-            price: price,
-        }
+    return async dispatch => { //redux thunk
+        //async code here
+        const response = await fetch('https://rn-shop-app-38752.firebaseio.com/products.json', { //url firebase + folder,  fetch sends request
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title,
+                description,
+                imageUrl,
+                price
+            }) // do not send id! firebase will generate one
+        });
+
+        const responseData = await response.json();
+
+        console.log(responseData);
+
+
+        dispatch({
+            type: CREATE_PRODUCT,
+            productData: {
+                id: responseData.name,
+                title: title,
+                description: description,
+                imageUrl: imageUrl,
+                price: price,
+            }
+        });
     }
 };
 

@@ -4,14 +4,12 @@ import {
     Text,
     Image,
     StyleSheet,
-    Button,
     TouchableOpacity,
     TouchableNativeFeedback,
     Platform
 } from 'react-native';
 
-import Colors from '../../constants/Colors';
-import Card from "../UI/Card";
+import Card from '../UI/Card';
 
 const ProductItem = props => {
     let TouchableCmp = TouchableOpacity;
@@ -23,7 +21,6 @@ const ProductItem = props => {
     return (
         <Card style={styles.product}>
             <View style={styles.touchable}>
-                {/*item is clicable*/}
                 <TouchableCmp onPress={props.onSelect} useForeground>
                     <View>
                         <View style={styles.imageContainer}>
@@ -44,7 +41,7 @@ const ProductItem = props => {
 };
 
 const styles = StyleSheet.create({
-    product: { //card look
+    product: {
         height: 300,
         margin: 20
     },
@@ -52,7 +49,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden'
     },
-    imageContainer: { //rounder corners
+    imageContainer: {
         width: '100%',
         height: '60%',
         borderTopLeftRadius: 10,
@@ -69,9 +66,9 @@ const styles = StyleSheet.create({
         padding: 10
     },
     title: {
-        fontSize: 18,
-        marginVertical: 2,
         fontFamily: 'open-sans-bold',
+        fontSize: 18,
+        marginVertical: 2
     },
     price: {
         fontFamily: 'open-sans',
